@@ -1,5 +1,4 @@
 from pytube import YouTube
-from sys import argv
 
 print("Paste link here: ")
 link = input()
