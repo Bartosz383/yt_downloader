@@ -1,24 +1,52 @@
+from tkinter import filedialog, messagebox
+
 from pytube import YouTube
 from tkinter import *
 
-main = Tk()
+def Widgets():
+    ytLink = Label(root, text="YouTube URL: ", bg="#33b249")
+    ytLink.grid(row=0, column=0, padx=5, pady=5)
 
-main.mainloop()
+    root.ytLinkText = Entry(root, width=60, bg="#a1d99b", textvariable=videoLink)
+    root.ytLinkText.grid(row=0, column=1, padx=5, pady=5)
 
-print("Paste link here: ")
-link = input()
+    destinationLabel = Label(root, text="Destination: ", bg="#33b249")
+    destinationLabel.grid(row=1, column=0, padx=5, pady=5)
 
-yt = YouTube(link)
-print("Title: ", yt.title, "\nView: ", yt.views)
+    root.destinationText = Entry(root, width=60, bg="#a1d99b", textvariable=downloadPath)
+    root.destinationText.grid(row=1, column=1, padx=5, pady=5)
 
-print("Sound only? Yes - write whatever. False - click enter")
-soundOnly = input()
+    browseButton = Button(root, text="Browse", command=Browse, width=10, bg="#33b249")
+    browseButton.grid(row=1, column=2, padx=5, pady=5)
 
-print("Set resolution: 144p, 240p, 360p, 480p, 720p, 1080p")
-resolution = input()
+    downloadButton = Button(root, text="Download", command=DownloadVideo, width=25, bg="#33b249")
+    downloadButton.grid(row=2, column=1, padx=5, pady=5)
 
-print("Set location path")
-path = input()
+def Browse():
+    downlandDirectory = filedialog.askdirectory(initialdir="Your Directory Path")
 
-stream = yt.streams.filter(only_audio = soundOnly, res = resolution).first().download(path)
-#stream = yt.streams.filter(only_audio = soundOnly, res = resolution).first().download('/Users/krusz/OneDrive/Pulpit/MusicFromYT')
+    downloadPath.set(downlandDirectory)
+
+def DownloadVideo():
+
+    url = videoLink.get()
+    folder = downloadPath.get()
+
+    getVideo = YouTube(url)
+    getStream = getVideo.streams.first()
+    getStream.download(folder)
+
+    messagebox.showinfo("Download Successful", "Your video is here " + folder)
+
+root = Tk()
+root.title("YouTube Downloader")
+#root.geometry("320x800")
+#root.resizable(False, False)
+root.configure(bg="black")
+
+videoLink = StringVar()
+downloadPath = StringVar()
+
+Widgets()
+
+root.mainloop()
