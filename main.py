@@ -7,6 +7,7 @@ yt = YouTube(link)
 print("Title: ", yt.title)
 print("View: ", yt.views)
 
-stream = yt.streams.first()
+print("Sound only? True or False")
+soundOnly = input()
 
-stream.download('/Users/krusz/OneDrive/Pulpit/MusicFromYT')
+stream = yt.streams.filter(only_audio=soundOnly).first().download('/Users/krusz/OneDrive/Pulpit/MusicFromYT')
