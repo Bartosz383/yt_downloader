@@ -21,6 +21,9 @@ def Widgets():
 
     downloadButton = Button(root, text="Download", command=DownloadVideo, width=25, bg="#33b249")
     downloadButton.grid(row=2, column=1, padx=5, pady=5)
+    
+    quitButton = Button(root, text="Quit", command=root.quit, width=25, bg="#33b249")
+    quitButton.grid(row=3, column=1, padx=5, pady=5)
 
 def Browse():
     downlandDirectory = filedialog.askdirectory(initialdir="Your Directory Path")
