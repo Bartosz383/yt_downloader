@@ -59,7 +59,7 @@ def DownloadVideo():
 
 root = Tk()
 root.title("YouTube Downloader")
-root.iconbitmap('C:/Users/krusz/PycharmProjects/pythonProject/YTdownloaderIcon.ico')
+root.iconbitmap('YTdownloaderIcon.ico')
 root.configure(bg="black")
 
 resOptions = ["144p", "240p", "360p", "480p", "720p", "1080p"]
