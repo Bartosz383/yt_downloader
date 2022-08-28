@@ -42,10 +42,10 @@ def DownloadVideo():
     url = videoLink.get()
     folder = downloadPath.get()
     onlyAudioSet = False
-    #resolution =
+    resolution = "480p"
 
     getVideo = YouTube(url)
-    getStream = getVideo.streams.filter(res="144p", only_audio=onlyAudioSet).first()
+    getStream = getVideo.streams.filter(res=resolution, only_audio=onlyAudioSet).first()
     getStream.download(folder)
 
     messagebox.showinfo("Download Successful", "Your video is here " + getVideo.title + folder)
