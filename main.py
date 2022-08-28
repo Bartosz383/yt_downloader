@@ -1,4 +1,4 @@
-from tkinter import filedialog, messagebox
+rom tkinter import filedialog, messagebox
 
 from pytube import YouTube
 from tkinter import *
@@ -31,9 +31,6 @@ def Widgets():
     resolutionMenu["menu"].config(bg="#33b249")
     resolutionMenu.grid(row=3, column=0, padx=5, pady=5)
 
-    myButton = Button(root, text="Show Selection", command=ResolutionSet)
-    myButton.grid(row=5, column=0, padx=5, pady=5)
-
     downloadButton = Button(root, text="Download", command=DownloadVideo, width=25, bg="#33b249")
     downloadButton.grid(row=2, column=1, padx=5, pady=5)
 
@@ -44,10 +41,6 @@ def AudioSet():
     audioCheck = Label(root, text=varCheckbox.get())
     audioCheck.grid(row=5, column=1, padx=5, pady=5)
 
-def ResolutionSet():
-    myLabel = Label(root, text=clicked.get())
-    myLabel.grid(row=5, column=1, padx=5, pady=5)
-
 def Browse():
     downlandDirectory = filedialog.askdirectory(initialdir="Your Directory Path")
     downloadPath.set(downlandDirectory)
@@ -57,10 +50,10 @@ def DownloadVideo():
     url = videoLink.get()
     folder = downloadPath.get()
     onlyAudioSet = varCheckbox.get()
-    resolution = "144p"
+    res = clicked.get()
 
     getVideo = YouTube(url)
-    getStream = getVideo.streams.filter(res=resolution, only_audio=onlyAudioSet).first()
+    getStream = getVideo.streams.filter(res=res, only_audio=onlyAudioSet).first()
     getStream.download(folder)
 
     messagebox.showinfo("Download Successful", "Your video is here " + getVideo.title + folder)
