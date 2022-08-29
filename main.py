@@ -1,9 +1,8 @@
 from tkinter import filedialog, messagebox
-
 from pytube import YouTube
 from tkinter import *
 
-def Widgets():
+def Widgets(root, videoLink, downloadPath, varCheckbox, clicked, resOptions):
     ytLink = Label(root, text="YouTube URL: ", width=13, bg="#33b249")
     ytLink.grid(row=0, column=0, padx=5, pady=5)
 
@@ -16,7 +15,7 @@ def Widgets():
     root.destinationText = Entry(root, width=60, bg="#a1d99b", textvariable=downloadPath)
     root.destinationText.grid(row=1, column=1, padx=5, pady=5)
 
-    browseButton = Button(root, text="Browse", command=Browse, width=13, bg="#33b249")
+    browseButton = Button(root, text="Browse", command=lambda : Browse(downloadPath), width=13, bg="#33b249")
     browseButton.grid(row=1, column=2, padx=5, pady=5)
 
     soundCheckbox = Checkbutton(root, text="Sound only", width=10, bg="#33b249", variable=varCheckbox, onvalue=True, offvalue=False)
@@ -31,17 +30,17 @@ def Widgets():
     resolutionMenu["menu"].config(bg="#33b249")
     resolutionMenu.grid(row=3, column=0, padx=5, pady=5)
 
-    downloadButton = Button(root, text="Download", command=DownloadVideo, width=25, bg="#33b249")
+    downloadButton = Button(root, text="Download", command=lambda : DownloadVideo(videoLink, downloadPath,varCheckbox, clicked), width=25, bg="#33b249")
     downloadButton.grid(row=2, column=1, padx=5, pady=5)
 
     quitButton = Button(root, text="Quit", command=root.quit, width=25, bg="#33b249")
     quitButton.grid(row=3, column=1, padx=5, pady=5)
 
-def Browse():
+def Browse(downloadPath):
     downlandDirectory = filedialog.askdirectory(initialdir="Your Directory Path")
     downloadPath.set(downlandDirectory)
 
-def DownloadVideo():
+def DownloadVideo(videoLink, downloadPath,varCheckbox, clicked):
 
     url = videoLink.get()
     folder = downloadPath.get()
@@ -57,19 +56,23 @@ def DownloadVideo():
 
     messagebox.showinfo("Download Successful", "Your video is here " + getVideo.title + "\nVideo length: " + str(getVideo.length) + " seconds" + "\n" + folder)
 
-root = Tk()
-root.title("YouTube Downloader")
-root.iconbitmap('YTdownloaderIcon.ico')
-root.configure(bg="black")
+def main():
+    root = Tk()
+    root.title("YouTube Downloader")
+    root.iconbitmap('YTdownloaderIcon.ico')
+    root.configure(bg="black")
 
-resOptions = ["144p", "240p", "360p", "480p", "720p", "1080p"]
+    resOptions = ["144p", "240p", "360p", "480p", "720p", "1080p"]
 
-videoLink = StringVar()
-downloadPath = StringVar()
-varCheckbox = BooleanVar()
-clicked = StringVar()
-clicked.set(resOptions[0])
+    videoLink = StringVar()
+    downloadPath = StringVar()
+    varCheckbox = BooleanVar()
+    clicked = StringVar()
+    clicked.set(resOptions[0])
 
-Widgets()
+    Widgets(root, videoLink, downloadPath, varCheckbox, clicked, resOptions)
 
-root.mainloop()
+    root.mainloop()
+
+if __name__ == "__main__":
+    main()
