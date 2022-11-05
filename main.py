@@ -56,6 +56,30 @@ def DownloadVideo(videoLink, downloadPath,varCheckbox, clicked):
 
     messagebox.showinfo("Download Successful", "Your video is here " + getVideo.title + "\nVideo length: " + str(getVideo.length) + " seconds" + "\n" + folder)
 
+def downloadMultipleVideo():
+
+    path = "C:\\Users\\krusz\\Music\\"
+    manyURLs = open("D:\Repozytoria i inne takie\yt_downloader\links.txt", 'r')
+    count = 1
+
+    for i in manyURLs:
+        try:
+            yt=YouTube(i)
+        except:
+            print("Error")
+
+        yt.streams.filter(progressive = True, file_extension='mp4')
+        hr = yt.streams.get_highest_resolution()
+
+        try:
+            hr.download(path)
+            print(count, " Completed")
+            count += 1
+        except:
+            print("Error")
+
+    print("Completed")
+
 def main():
     root = Tk()
     root.title("YouTube Downloader")
@@ -76,3 +100,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+    downloadMultipleVideo()
