@@ -2,6 +2,8 @@ from tkinter import filedialog, messagebox
 from pytube import YouTube
 from tkinter import *
 from pytube import Playlist
+import os
+import sys
 
 
 def WidgetsOneFile(root, videoLink, downloadPath, varCheckbox, clicked, resOptions):
@@ -120,13 +122,24 @@ def MenuDownloadOneVideo():
     root.mainloop()
 
 def DownloadPlaylist():
-
-    #p = Playlist('https://www.youtube.com/playlist?list=PLY7Epj-qzAssCTx7i8D_qFt5IsprQ2gJK')
-    p = Playlist('https://www.youtube.com/playlist?list=PLY7Epj-qzAsvsXH600-wTqWpOue_dAgtv')
+    ytStreamAudio = '140'
+    downloadPath = "C:\\Users\\krusz\Music\\Playlista"
+    p = Playlist('https://www.youtube.com/playlist?list=PLY7Epj-qzAssCTx7i8D_qFt5IsprQ2gJK')
+    #p = Playlist('https://www.youtube.com/playlist?list=PLY7Epj-qzAsvsXH600-wTqWpOue_dAgtv')
 
     print(f'Downloading: {p.title}')
-    for video in p.videos:
-        video.streams.first().download()
+    for video in p.videos[5:]:
+        outFile = video.streams.get_by_itag(ytStreamAudio)
+        outFile.download(output_path=downloadPath)
+
+
+    for filename in os.listdir(downloadPath):
+        infilename = os.path.join(downloadPath, filename)
+        if not os.path.isfile(infilename): continue
+        oldbase = os.path.splitext(filename)
+        newname = infilename.replace('.mp4', '.mp3')
+        output = os.rename(infilename, newname)
+
 def main():
     master = Tk()
     # master.geometry("300x300")
