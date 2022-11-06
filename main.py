@@ -128,17 +128,37 @@ def DownloadPlaylist():
     #p = Playlist('https://www.youtube.com/playlist?list=PLY7Epj-qzAsvsXH600-wTqWpOue_dAgtv')
 
     print(f'Downloading: {p.title}')
-    for video in p.videos[5:]:
-        outFile = video.streams.get_by_itag(ytStreamAudio)
-        outFile.download(output_path=downloadPath)
+    for video in p.videos:
+        try:
+            outFile = video.streams.get_by_itag(ytStreamAudio)
+            outFile.download(output_path=downloadPath)
+            print("file downloaded")
+        except:
+            print("Error")
 
+    print("Download completed")
 
     for filename in os.listdir(downloadPath):
-        infilename = os.path.join(downloadPath, filename)
-        if not os.path.isfile(infilename): continue
-        oldbase = os.path.splitext(filename)
-        newname = infilename.replace('.mp4', '.mp3')
-        output = os.rename(infilename, newname)
+        try:
+            infilename = os.path.join(downloadPath, filename)
+            if not os.path.isfile(infilename): continue
+            oldbase = os.path.splitext(filename)
+            newname = infilename.replace('.mp4', '.mp3')
+            output = os.rename(infilename, newname)
+            print("file converted")
+        except:
+            print("Error")
+
+    print("Conversion completed")
+
+    count = 0
+    # Iterate directory
+    for path in os.listdir(downloadPath):
+        # check if current path is a file
+        if os.path.isfile(os.path.join(downloadPath, path)):
+            count += 1
+    print('File count:', count)
+
 
 def main():
     master = Tk()
@@ -160,4 +180,4 @@ if __name__ == "__main__":
     # MenuDownloadOneVideo()
     # DownloadMultipleVideo()
     # master()
-    DownloadPlaylist()
+    # DownloadPlaylist()
