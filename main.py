@@ -1,6 +1,7 @@
 from tkinter import filedialog, messagebox
 from pytube import YouTube
 from tkinter import *
+from pytube import Playlist
 
 
 def WidgetsOneFile(root, videoLink, downloadPath, varCheckbox, clicked, resOptions):
@@ -42,7 +43,7 @@ def WidgetsOneFile(root, videoLink, downloadPath, varCheckbox, clicked, resOptio
 
 
 def WidgetsStart(master, varCheckbox, clicked):
-    nextButton = Button(master, text="Next", command=MenuDownloadOneVideo, width=25, bg="#33b249")
+    nextButton = Button(master, text="Next", command=lambda : MenuDownloadOneVideo(), width=25, bg="#33b249")
     nextButton.grid(row=0, column=1, padx=5, pady=5)
 
     multipleFileCheckbox = Checkbutton(master, text="Multiple File", width=20, bg="#33b249", variable=varCheckbox,
@@ -118,6 +119,14 @@ def MenuDownloadOneVideo():
 
     root.mainloop()
 
+def DownloadPlaylist():
+
+    #p = Playlist('https://www.youtube.com/playlist?list=PLY7Epj-qzAssCTx7i8D_qFt5IsprQ2gJK')
+    p = Playlist('https://www.youtube.com/playlist?list=PLY7Epj-qzAsvsXH600-wTqWpOue_dAgtv')
+
+    print(f'Downloading: {p.title}')
+    for video in p.videos:
+        video.streams.first().download()
 def main():
     master = Tk()
     # master.geometry("300x300")
@@ -134,7 +143,8 @@ def main():
 
 
 if __name__ == "__main__":
-    #main()
-    MenuDownloadOneVideo()
+    # main()
+    # MenuDownloadOneVideo()
     # DownloadMultipleVideo()
     # master()
+    DownloadPlaylist()
