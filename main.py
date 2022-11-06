@@ -124,8 +124,8 @@ def MenuDownloadOneVideo():
 def DownloadPlaylist():
     ytStreamAudio = '140'
     downloadPath = "C:\\Users\\krusz\Music\\Playlista"
-    p = Playlist('https://www.youtube.com/playlist?list=PLY7Epj-qzAssCTx7i8D_qFt5IsprQ2gJK')
-    #p = Playlist('https://www.youtube.com/playlist?list=PLY7Epj-qzAsvsXH600-wTqWpOue_dAgtv')
+    #p = Playlist('https://www.youtube.com/playlist?list=PLY7Epj-qzAssCTx7i8D_qFt5IsprQ2gJK')
+    p = Playlist('https://www.youtube.com/playlist?list=PLY7Epj-qzAsvsXH600-wTqWpOue_dAgtv')
 
     print(f'Downloading: {p.title}')
     for video in p.videos:
@@ -177,7 +177,7 @@ def main():
 
 if __name__ == "__main__":
     # main()
-    # MenuDownloadOneVideo()
+    MenuDownloadOneVideo()
     # DownloadMultipleVideo()
     # master()
     # DownloadPlaylist()
