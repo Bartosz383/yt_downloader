@@ -2,7 +2,7 @@ from tkinter import filedialog, messagebox
 from pytube import YouTube
 from tkinter import *
 
-def Widgets(root, videoLink, downloadPath, varCheckbox, clicked, resOptions):
+def WidgetsOneFile(root, videoLink, downloadPath, varCheckbox, clicked, resOptions):
     ytLink = Label(root, text="YouTube URL: ", width=13, bg="#33b249")
     ytLink.grid(row=0, column=0, padx=5, pady=5)
 
@@ -36,6 +36,17 @@ def Widgets(root, videoLink, downloadPath, varCheckbox, clicked, resOptions):
     quitButton = Button(root, text="Quit", command=root.quit, width=25, bg="#33b249")
     quitButton.grid(row=3, column=1, padx=5, pady=5)
 
+def WidgetsStart(master, varCheckbox, clicked):
+
+
+
+    multipleFileCheckbox = Checkbutton(master, text="Multiple File", width=20, bg="#33b249", variable=varCheckbox, onvalue=True, offvalue=False)
+    multipleFileCheckbox.deselect()
+    multipleFileCheckbox.grid(row=1, column=1, padx=5, pady=5)
+
+    quitButton = Button(master, text="Quit", command=master.quit, width=25, bg="#33b249")
+    quitButton.grid(row=3, column=1, padx=5, pady=5)
+
 def Browse(downloadPath):
     downlandDirectory = filedialog.askdirectory(initialdir="Your Directory Path")
     downloadPath.set(downlandDirectory)
@@ -56,7 +67,7 @@ def DownloadVideo(videoLink, downloadPath,varCheckbox, clicked):
 
     messagebox.showinfo("Download Successful", "Your video is here " + getVideo.title + "\nVideo length: " + str(getVideo.length) + " seconds" + "\n" + folder)
 
-def downloadMultipleVideo():
+def DownloadMultipleVideo():
 
     path = "C:\\Users\\krusz\\Music\\"
     manyURLs = open("D:\Repozytoria i inne takie\yt_downloader\links.txt", 'r')
@@ -80,7 +91,7 @@ def downloadMultipleVideo():
 
     print("Completed")
 
-def main():
+def DownloadOneVideo():
     root = Tk()
     root.title("YouTube Downloader")
     root.iconbitmap('YTdownloaderIcon.ico')
@@ -94,10 +105,47 @@ def main():
     clicked = StringVar()
     clicked.set(resOptions[0])
 
-    Widgets(root, videoLink, downloadPath, varCheckbox, clicked, resOptions)
+    WidgetsOneFile(root, videoLink, downloadPath, varCheckbox, clicked, resOptions)
 
     root.mainloop()
+def main():
+    master = Tk()
+    #master.geometry("300x300")
+    master.title("YouTube Downloader")
+    master.iconbitmap('YTdownloaderIcon.ico')
+    master.configure(bg="black")
+
+    varCheckbox = BooleanVar()
+    clicked = StringVar()
+
+    WidgetsStart(master, varCheckbox, clicked)
+
+    def openNewWindow():
+        # Toplevel object which will
+        # be treated as a new window
+        newWindow = Toplevel(master)
+
+        # sets the title of the
+        # Toplevel widget
+        newWindow.title("New Window")
+
+        # sets the geometry of toplevel
+        newWindow.geometry("200x200")
+
+        # A Label widget to show in toplevel
+        Label(newWindow,
+              text="This is a new window").pack()
+
+    nextButton = Button(master, text="Next", command=openNewWindow, width=25, bg="#33b249")
+    nextButton.grid(row=0, column=1, padx=5, pady=5)
+
+
+    master.mainloop()
+
+
 
 if __name__ == "__main__":
     main()
-    downloadMultipleVideo()
+    #DownloadOneVideo()
+    #DownloadMultipleVideo()
+    #master()
